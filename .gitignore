@@ -92,7 +92,11 @@ ipython_config.py
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
+<<<<<<< HEAD
 Pipfile.lock
+=======
+#Pipfile.lock
+>>>>>>> 2d9875e510332a9e714cd48407637812cc8e46c9
 
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
