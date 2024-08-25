@@ -1,8 +1,11 @@
 from django.urls import path, include
 
-from . import views
+from .views import *
 
 urlpatterns = [
-    path("", views.index_view, name="index"),
-    path("form", views.teacher_form, name="teacher-form")
+    path("", index_view, name="index"),
+    path("form", TeacherCreateView.as_view(), name="teacher-form"),
+    path("list", TeacherListView.as_view(), name="teacher-list"),
+    path("teacher/<int:pk>/", TeacherUpdateView.as_view(), name="teacher-update"),
+    path("delete/<int:pk>/", TeacherDeleteView.as_view(), name="teacher-delete"),
 ]

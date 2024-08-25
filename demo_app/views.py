@@ -1,6 +1,6 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import TeacherForm
 from .models import Teacher
@@ -11,19 +11,28 @@ def index_view(request):
     return render(request, "demo_app/index.html")
 
 
-def teacher_form(request):
-    # if this is a POST request we need to process the form data
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = TeacherForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # save valid and clean data
-            form.save()
-            # redirect to a new URL:
-            return HttpResponseRedirect(reverse("index"))
+class TeacherCreateView(CreateView):
+    model = Teacher
+    fields = '__all__'
+    success_url = reverse_lazy('teacher-list')
 
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = TeacherForm()
-        return render(request, "demo_app/forms.html", {"form": form})
+
+class TeacherListView(ListView):
+    model = Teacher
+    paginate_by = 10
+
+    def get_context_date(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class TeacherUpdateView(UpdateView):
+    model = Teacher
+    fields = '__all__'
+    template_name_suffix = "_update_form"
+    success_url = reverse_lazy('teacher-list')
+
+
+class TeacherDeleteView(DeleteView):
+    model = Teacher
+    success_url = reverse_lazy('teacher-list')
